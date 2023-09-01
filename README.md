@@ -8,7 +8,7 @@ Welcome to the repository for a blog website! This website is my digital space f
 
 ## About Me
 
-I'm [Oreoluwa], the sole creator and author of this blog website. It's a reflection of my passion for writing, learning, and sharing my perspective with the world.
+I'm Oreoluwa, the sole creator and author of this blog website. It's a reflection of my passion for writing, learning, and sharing my perspective with the world.
 
 ## Features
 
