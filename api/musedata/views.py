@@ -79,7 +79,7 @@ def tag_detail(request, pk):
 
 # Post View
 @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def post_list(request):
     if request.method == "GET":
         posts = Post.objects.all()
