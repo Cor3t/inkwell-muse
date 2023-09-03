@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-import requests
+from .forms import RegistrationForm
+from .services import AuthService
 
 # Create your views here.
 def login_view(request):
@@ -7,9 +8,7 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        url = "http://127.0.0.1:8000/auth/login/"
-        data = {'username': username, 'password':password}
-        response = requests.post(url, data=data)
+        response = AuthService.login(username, password)
         if response.status_code == 200:
             user_data = response.json()
             print(user_data)
@@ -19,4 +18,20 @@ def login_view(request):
     return render(request, 'login.html')
 
 def register_view(request):
-    pass
+    form = RegistrationForm()
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            response = AuthService.register( 
+                username = form.cleaned_data['username'],
+                email = form.cleaned_data['email'],
+                first_name = form.cleaned_data['first_name'],
+                last_name = form.cleaned_data['last_name'],
+                password = form.cleaned_data['password'],
+                )
+            if response.status_code == 201:
+                return redirect('login/')
+            
+            print(response.json())
+    
+    return render(request, 'register.html', {'form': form})

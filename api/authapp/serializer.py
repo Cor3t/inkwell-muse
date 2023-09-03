@@ -6,12 +6,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'username', 'first_name', 'last_name', 'password']
         extra_kwargs = {'password':{'write_only':True, 'required':True}}
-    
-    # password = serializers.CharField(
-    #     max_length=100,
-    #     write_only=True,  # This prevents the password from being displayed in responses
-    #     required=True,     # This makes the password field required during validation
-    # )
 
 class UserTokenSerializer(serializers.Serializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
