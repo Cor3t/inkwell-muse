@@ -5,12 +5,20 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import UserSerializer, UserTokenSerializer
+from django.contrib.auth.hashers import make_password
+from django.http import QueryDict
 
 # Registration View.
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
-    serializer = UserSerializer(data=request.data)
+    data = request.data.dict()
+    
+    if request.POST.get('password') is not None:
+        data['password'] = make_password(request.POST.get('password'))
+
+    serializer = UserSerializer(data=data)
+
     if serializer.is_valid():
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

@@ -17,3 +17,6 @@ def login_view(request):
             return redirect('profile')
         
     return render(request, 'login.html')
+
+def register_view(request):
+    pass

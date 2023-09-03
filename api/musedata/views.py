@@ -8,8 +8,13 @@ from rest_framework import status
 # Category View
 @api_view(['GET','POST'])
 def category_list(request):
-    if request.method == "GET":
+    if request.method == "GET":   
+        limit = int(request.GET.get('limit'))
         data = Category.objects.all()
+
+        if limit is not None:
+            data = data[:limit]
+            
         serializer = CategorySerializers(data, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
@@ -27,7 +32,6 @@ def category_detail(request, pk):
         data = Category.objects.get(pk=pk)
     except Category.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
     if request.method == "GET":
         serializer = CategorySerializers(data)
         return Response(serializer.data)
