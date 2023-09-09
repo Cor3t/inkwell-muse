@@ -8,12 +8,13 @@ from rest_framework import status
 # Category View
 @api_view(['GET','POST'])
 def category_list(request):
-    if request.method == "GET":   
-        limit = int(request.GET.get('limit'))
+    if request.method == "GET":
+
+        limit = request.GET.get('limit')
         data = Category.objects.all()
 
         if limit is not None:
-            data = data[:limit]
+            data = data[:int(limit)]
             
         serializer = CategorySerializers(data, many=True)
         return Response(serializer.data)
@@ -52,7 +53,7 @@ def tag_list(request):
     if request.method == "GET":
         tags = Tag.objects.all()
         serializer = TagSerializer(tags, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK) 
     elif request.method == "POST":
         serializer = TagSerializer(data=request.data)
         if serializer.is_valid():

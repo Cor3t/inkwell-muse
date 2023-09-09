@@ -6,7 +6,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import UserSerializer, UserTokenSerializer
 from django.contrib.auth.hashers import make_password
-from django.http import QueryDict
 
 # Registration View.
 @api_view(['POST'])

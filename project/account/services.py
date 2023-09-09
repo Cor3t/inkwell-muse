@@ -4,6 +4,7 @@ class AuthService:
 
     def login(username : str, password : str):
         data = {'username': username, 'password':password}
+        
         try:
             response = requests.post(AuthService.url + 'login/', data=data)
             return response

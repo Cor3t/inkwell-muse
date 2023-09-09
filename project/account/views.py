@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .services import AuthService
 
-# Create your views here.
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -19,6 +18,7 @@ def login_view(request):
 
 def register_view(request):
     form = RegistrationForm()
+    print(request.user.is_authenticated)
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -31,7 +31,4 @@ def register_view(request):
                 )
             if response.status_code == 201:
                 return redirect('login/')
-            
-            print(response.json())
-    
     return render(request, 'register.html', {'form': form})
